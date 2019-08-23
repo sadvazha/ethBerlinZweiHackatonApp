@@ -1,0 +1,29 @@
+{
+  "name": "ethberlinzweihackatonapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "eslint_init": "eslint --init",
+    "eslint": "eslint . -f codeframe",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadvazha/ethBerlinZweiHackatonApp.git"
+  },
+  "author": "Zhanybek Sadvakassov, Ali Nuraldin, Evgeny Nasretdinov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadvazha/ethBerlinZweiHackatonApp/issues"
+  },
+  "homepage": "https://github.com/sadvazha/ethBerlinZweiHackatonApp#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "meta-stamp": "git@github.com:EvgenyNasretdinov/meta-stamp.git"
+  },
+  "devDependencies": {
+    "eslint": "^6.2.1"
+  }
+}
