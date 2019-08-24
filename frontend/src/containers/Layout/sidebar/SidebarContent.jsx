@@ -20,21 +20,18 @@ class SidebarContent extends Component {
     return (
       <div className="sidebar__content">
         <ul className="sidebar__block">
-          <SidebarLink title="Log In" icon="exit" route="/log_in" onClick={this.hideSidebar} />
-          <SidebarCategory title="Layout" icon="layers">
+          <SidebarLink title="Log Out" icon="exit" route="/log_in" onClick={this.hideSidebar} />
+          <SidebarCategory title="Theme" icon="layers">
             <button type="button" className="sidebar__link" onClick={changeToLight}>
-              <p className="sidebar__link-title">Light Theme</p>
+              <p className="sidebar__link-title">Light</p>
             </button>
             <button type="button" className="sidebar__link" onClick={changeToDark}>
-              <p className="sidebar__link-title">Dark Theme</p>
+              <p className="sidebar__link-title">Dark</p>
             </button>
           </SidebarCategory>
         </ul>
         <ul className="sidebar__block">
-          <SidebarCategory title="Example Pages" icon="diamond">
-            <SidebarLink title="Page one" route="/pages/one" onClick={this.hideSidebar} />
-            <SidebarLink title="Page two" route="/pages/two" onClick={this.hideSidebar} />
-          </SidebarCategory>
+          <SidebarLink title="Settings" icon="cog" route="/pages/settings" onClick={this.hideSidebar} />
         </ul>
       </div>
     );

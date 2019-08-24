@@ -1,5 +1,5 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
+import QRCode from 'qrcode.react';
 
 import Modal from './components/Modal';
 
@@ -8,20 +8,25 @@ const Message = () => (
     <p>
       Scan QR using your MetaStamp application
     </p>
-    <img alt="Your mama" src="https://avatars0.githubusercontent.com/u/7525670?v=4" />
+    <br />
+    <center>
+      <QRCode value="http://facebook.github.io/react/" />
+    </center>
   </div>
 );
 
-const ExamplePageOne = () => (
+const Settings = () => (
   <main>
-    <h1>React Modal</h1>
+    <h1>Settings</h1><br />
+    <h3>Link your account to MetaStamp</h3><br />
     <Modal
       title="Scan QR code"
       message={<Message />}
       btn="Link MetaStamp"
       color="primary"
+      header
     />
   </main>
 );
 
-export default ExamplePageOne;
+export default Settings;
