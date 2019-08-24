@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 
 import Modal from './components/Modal';
 
@@ -12,9 +11,10 @@ const Message = () => (
   </div>
 );
 
-const ExamplePageOne = () => (
+const Settings = () => (
   <main>
-    <h1>React Modal</h1>
+    <h1>Settings</h1><br />
+    <h3>Link your account to MetaStamp</h3><br />
     <Modal
       title="Scan QR code"
       message={<Message />}
@@ -24,4 +24,4 @@ const ExamplePageOne = () => (
   </main>
 );
 
-export default ExamplePageOne;
+export default Settings;
