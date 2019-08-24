@@ -20,7 +20,7 @@ metaStamp.init({
     version: '1.0.0',
     domain: 'trade.dib.one',
     logo: 'https://pbs.twimg.com/profile_images/998895674522353665/mQFAbUOX_400x400.jpg',
-    hook: 'https://api.dib.one/v1/signatures/submit',
+    hook: 'https://afraid-rattlesnake-67.localtunnel.me/signatures/',
 });
 
 app.get('/', (req, res) => {
@@ -64,4 +64,43 @@ app.post('/', (req, res) => {
     return res.send('Good job! We did nothing!');
 });
 
-app.listen(3001, '0.0.0.0');
+app.post('/signatures/', (req, res) => {
+    if (!req.body || !utils.isString(req.body.id) || !utils.isString(req.body.signature)) {
+        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+    }
+
+    verifySignature(req.body.signature, req.body.id);
+
+    return res.send('Transaction approved');
+});
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+io.on('connection', client => {
+    console.log('Some one connected: ', client);
+
+    client.on('event', data => {
+        client.emit('finished', 'OK');
+    });
+
+    client.on('disconnect', () => {
+        console.log('Some one has disconnected');
+    });
+});
+
+server.listen(3001, '0.0.0.0');
+
+/**
+ *
+ * @param {string} signature
+ * @param {string} id
+ * @returns {boolean}
+ */
+function verifySignature(signature, id) {
+    if (parseInt(id, 10) <= incId) {
+        return true;
+    }
+
+    return false;
+}
