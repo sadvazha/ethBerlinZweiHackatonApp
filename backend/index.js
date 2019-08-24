@@ -93,7 +93,7 @@ io.on('connection', client => {
 server.listen(config.PORT, config.HOST);
 
 /**
- * TODO: function is not
+ * TODO: Implement signature verification
  *
  * @param {string} signature
  * @param {string} id
