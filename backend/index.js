@@ -60,19 +60,20 @@ app.get('/:id', (req, res) => {
 
 app.post('/signatures/', (req, res) => {
     if (!utils.isString(req.body.id) || !utils.isString(req.body.signature)) {
-        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+        return res.sendStatus(constants.RESPONSE_CODES.BAD_REQUEST);
     }
 
     if (!verifySignature(req.body.signature, req.body.id)) {
-        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+        return res.sendStatus(constants.RESPONSE_CODES.BAD_REQUEST);
     }
 
     const socket = activeSockets.get(+req.body.id);
     if (!socket) {
-        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+        return res.sendStatus(constants.RESPONSE_CODES.BAD_REQUEST);
     }
 
     socket.emit('success');
+    activeSockets.delete(+req.body.id);
 
     return res.end();
 });
@@ -86,6 +87,9 @@ io.on('connection', client => {
     client.on('request', () => {
         const currentId = ++incId;
         activeSockets.set(currentId, client);
+        setTimeout(() => {
+            activeSockets.delete(currentId);
+        }, constants.SOCKET_LIVE_TIME);
         client.emit('id', currentId);
     });
 });
