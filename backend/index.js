@@ -26,9 +26,6 @@ metaStamp.init({
 });
 
 app.get('/:id', (req, res) => {
-    if (!activeIds.has(req.params.id)) {
-        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
-    }
     const obj = {
         id: req.params.id,
         description: 'Test',
@@ -96,6 +93,7 @@ io.on('connection', client => {
 server.listen(config.PORT, config.HOST);
 
 /**
+ * TODO: function is not
  *
  * @param {string} signature
  * @param {string} id
