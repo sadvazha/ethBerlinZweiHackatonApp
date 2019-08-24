@@ -6,7 +6,7 @@ import classNames from 'classnames';
 export default class ModalComponent extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
-    message: PropTypes.string,
+    message: PropTypes.func,
     color: PropTypes.string.isRequired,
     colored: PropTypes.bool,
     header: PropTypes.bool,
