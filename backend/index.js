@@ -9,6 +9,8 @@ const utils = require('./utils');
 
 const app = express();
 
+const activeSockets = new Map();
+
 app.use(bodyParser.json());
 app.use((req, res, next) => {
     console.log({headers: req.headers, body:req.body, ip: req.connection.remoteAddress});
@@ -20,12 +22,15 @@ metaStamp.init({
     version: '1.0.0',
     domain: 'trade.dib.one',
     logo: 'https://pbs.twimg.com/profile_images/998895674522353665/mQFAbUOX_400x400.jpg',
-    hook: 'https://afraid-rattlesnake-67.localtunnel.me/signatures/',
+    hook: `${config.HOST}:${config.PORT}/signatures/`,
 });
 
-app.get('/', (req, res) => {
+app.get('/:id', (req, res) => {
+    if (!activeIds.has(req.params.id)) {
+        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+    }
     const obj = {
-        id: (++incId).toString(),
+        id: req.params.id,
         description: 'Test',
         data: {
             types: {
@@ -56,40 +61,39 @@ app.get('/', (req, res) => {
     return res.send(metaStamp.generate(obj));
 });
 
-app.post('/', (req, res) => {
-    if (!req.body || !utils.isString(req.body.id) || !utils.isString(req.body.signature)) {
+app.post('/signatures/:id/:signature', (req, res) => {
+    if (!utils.isString(req.params.id) || !utils.isString(req.params.signature)) {
         return res.sendStatus(constants.responseCodes.BAD_REQUEST);
     }
 
-    return res.send('Good job! We did nothing!');
-});
-
-app.post('/signatures/', (req, res) => {
-    if (!req.body || !utils.isString(req.body.id) || !utils.isString(req.body.signature)) {
+    if (!verifySignature(req.params.signature, req.params.id)) {
         return res.sendStatus(constants.responseCodes.BAD_REQUEST);
     }
 
-    verifySignature(req.body.signature, req.body.id);
+    const socket = activeSockets.get(req.params.id);
+    if (!socket) {
+        return res.sendStatus(constants.responseCodes.BAD_REQUEST);
+    }
 
-    return res.send('Transaction approved');
+    socket.emit('success');
+
+    return res.end();
 });
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 io.on('connection', client => {
-    console.log('Some one connected: ', client);
+    console.log('Connection established: ', client);
 
-    client.on('event', data => {
-        client.emit('finished', 'OK');
-    });
-
-    client.on('disconnect', () => {
-        console.log('Some one has disconnected');
+    client.on('request', () => {
+        const currentId = ++incId;
+        activeSockets.set(currentId, client);
+        client.emit('id', currentId);
     });
 });
 
-server.listen(3001, '0.0.0.0');
+server.listen(config.PORT, config.HOST);
 
 /**
  *
