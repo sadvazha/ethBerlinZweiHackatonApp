@@ -89,7 +89,7 @@ io.on('connection', client => {
         activeSockets.set(currentId, client);
         setTimeout(() => {
             activeSockets.delete(currentId);
-        }, constants.SOCKET_LIVE_TIME);
+        }, constants.SOCKET_TTL);
         client.emit('id', currentId);
     });
 });
