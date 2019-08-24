@@ -58,16 +58,16 @@ app.get('/:id', (req, res) => {
     return res.send(metaStamp.generate(obj));
 });
 
-app.post('/signatures/:id/:signature', (req, res) => {
-    if (!utils.isString(req.params.id) || !utils.isString(req.params.signature)) {
+app.post('/signatures/', (req, res) => {
+    if (!utils.isString(req.body.id) || !utils.isString(req.body.signature)) {
         return res.sendStatus(constants.responseCodes.BAD_REQUEST);
     }
 
-    if (!verifySignature(req.params.signature, req.params.id)) {
+    if (!verifySignature(req.body.signature, req.body.id)) {
         return res.sendStatus(constants.responseCodes.BAD_REQUEST);
     }
 
-    const socket = activeSockets.get(req.params.id);
+    const socket = activeSockets.get(+req.body.id);
     if (!socket) {
         return res.sendStatus(constants.responseCodes.BAD_REQUEST);
     }

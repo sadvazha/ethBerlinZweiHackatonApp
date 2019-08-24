@@ -35,7 +35,7 @@ class Message extends React.Component {
         <br />
         {!success && (
           <center>
-            <QRCode value={`http://facebook.github.io/react/${id}`} />
+            <QRCode value={`https://moody-bulldog-38.localtunnel.me/${id}`} />
           </center>
         )}
         {success && (

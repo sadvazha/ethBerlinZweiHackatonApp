@@ -11,7 +11,7 @@ class SocketIO {
     });
 
     this.socket.on('success', () => {
-      console.log('Success!');
+      this.handlers.forEach(handler => handler());
     });
   }
 
