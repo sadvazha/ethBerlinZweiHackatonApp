@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "homepage": "http://previews.aspirity.com/easydev",
+  "license": "MIT",
   "dependencies": {
     "bfj": "^6.1.1",
     "bootstrap": "^4.3.1",

@@ -13,7 +13,7 @@
     "url": "git+https://github.com/sadvazha/ethBerlinZweiHackatonApp.git"
   },
   "author": "Zhanybek Sadvakassov, Ali Nuraldin, Evgeny Nasretdinov",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sadvazha/ethBerlinZweiHackatonApp/issues"
   },
